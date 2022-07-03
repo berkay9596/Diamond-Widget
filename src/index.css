@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 2rem;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+    Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+}
+
+.reward-button {
+  background-color: black;
+  color: #FFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  border-radius: 2rem;
+  width: 150px;
+}
+
+.logout:hover {
+  background-color: black;
+}
+
+.logout {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.diamond-image {
+  transition: all .2s ease-in-out;
+}
+
+.diamond-image:hover {
+  transform: scale(1.1);
+  background-color: rgb(69, 186, 108);
+  border-radius: 10px;
+}
