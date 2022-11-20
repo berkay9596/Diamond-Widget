@@ -256,7 +256,6 @@ const DiamondCard = () => {
                             sendDeso(index);
                           } else {
                             desoLogin();
-                            console.log("index", index);
                           }
                         }}
                       />
