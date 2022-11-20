@@ -5,7 +5,8 @@ import unlem from "../assets/unlem.svg";
 import Confetti from "./Confetti";
 import Deso from "deso-protocol";
 import DesoApi from "../libs/desoApi";
-// import { SpinnerCircular } from "spinners-react";
+import DesoIdentity from "../libs/desoIdentity";
+import { SpinnerCircular } from "spinners-react";
 const DiamondCard = () => {
   const amounts = ["1", "2", "4", "20", "50", "100"];
   const [value, setValue] = useState(0);
@@ -16,10 +17,13 @@ const DiamondCard = () => {
   const [loading, setLoading] = useState(false);
   const [publicKeyFromUrl, setPublicKeyFromUrl] = useState();
   const [desoApi, setDesoApi] = useState();
+  const [desoIdentity, setDesoIdentity] = useState();
 
   useEffect(() => {
     const da = new DesoApi();
     setDesoApi(da);
+    const di = new DesoIdentity();
+    setDesoIdentity(di);
     // eslint-disable-line react-hooks/exhaustive-deps
   }, []);
 
@@ -27,7 +31,6 @@ const DiamondCard = () => {
     const deso = new Deso();
     const request = 3;
     const response = await deso.identity.login(request);
-    console.log("response", response);
     setPublicKey(response.key);
     setIsLoggedIn(true);
   };
@@ -35,7 +38,6 @@ const DiamondCard = () => {
     const deso = new Deso();
     const request = null;
     const response = deso.identity.logout(request);
-    console.log("logout resp", response);
     setIsLoggedIn(false);
   };
   const getUsername = async () => {
@@ -47,8 +49,7 @@ const DiamondCard = () => {
     setUsername(response?.Profile?.Username);
   };
 
-  const sendDeso = async (index) => {
-    setLoading(true);
+  const sendDesoMiddleWare = async (index) => {
     const deso = new Deso();
     const responseForExchange = await desoApi.getExchangeRate();
     let convertedUsd =
@@ -66,10 +67,10 @@ const DiamondCard = () => {
     } else if (index === 5) {
       convertedUsd = 100 * convertedUsd;
     }
-    console.log("convertedUsd", Math.round(100 * (convertedUsd * 10000000)));
     const request = {
       SenderPublicKeyBase58Check: publicKey,
       AmountNanos: Math.round(100 * (convertedUsd * 10000000)),
+      // AmountNanos: 1,
       RecipientPublicKeyOrUsername: publicKeyFromUrl,
     };
     const response = await desoApi.sendBitclout(
@@ -77,10 +78,29 @@ const DiamondCard = () => {
       request.AmountNanos,
       request.RecipientPublicKeyOrUsername
     );
-    if (response) {
-      setValue((value) => value + 1);
-      setLoading(false);
+    const transactionHex = await response.TransactionHex;
+    const signedTransactionHex = await desoIdentity.signTxAsync(transactionHex);
+    const rtnSubmitTransaction = await desoApi.submitTransaction(
+      signedTransactionHex
+    );
+    if (rtnSubmitTransaction) {
+      return true;
+    } else {
+      return null;
     }
+  };
+
+  const sendDeso = async (index) => {
+    setLoading(true);
+
+    const resp = sendDesoMiddleWare(index);
+    resp
+      .then((r) => {
+        setValue((value) => value + 1);
+        setLoading(false);
+        return true;
+      })
+      .catch((err) => setLoading(false));
   };
 
   useEffect(() => {
@@ -99,20 +119,21 @@ const DiamondCard = () => {
 
   return (
     <>
-      {/* {loading && (
-        <div
-          style={{
-            height: "100vh",
-            width: "100vw",
-            dipslay: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {" "}
-          <SpinnerCircular />{" "}
-        </div>
-      )} */}
+      <iframe
+        title="desoidentity"
+        id="identity"
+        frameBorder="0"
+        src="https://identity.deso.org/embed?v=2"
+        style={{
+          height: "100vh",
+          width: "100vw",
+          display: "none",
+          position: "fixed",
+          zIndex: 1000,
+          left: 0,
+          top: 0,
+        }}
+      ></iframe>
       <button
         className="reward-button"
         onMouseEnter={(e) => {
@@ -172,67 +193,82 @@ const DiamondCard = () => {
             </p>
           </div>
         )}
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginBottom: "1rem",
-            padding: "0.7rem",
-          }}
-        >
-          {amounts.map((elem, index) => {
-            return (
-              <div key={index}>
-                <div
-                  className="card-diamond"
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "start",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div
-                    className="diamond-amount"
-                    style={{
-                      color: "#CCCCCC",
-                      border: "3px solid #CCCCCC",
-                      borderRadius: "10px",
-                      padding: "0.4rem",
-                      width: "3rem",
-                      height: "0.5rem",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: "0.7rem",
-                      marginBottom: "4px",
-                      fontSize: "14px",
-                    }}
-                  >
-                    ${elem}
+        {loading ? (
+          <div
+            style={{
+              dipslay: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            {" "}
+            <SpinnerCircular />{" "}
+          </div>
+        ) : (
+          <>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginBottom: "1rem",
+                padding: "0.7rem",
+              }}
+            >
+              {amounts.map((elem, index) => {
+                return (
+                  <div key={index}>
+                    <div
+                      className="card-diamond"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "start",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <div
+                        className="diamond-amount"
+                        style={{
+                          color: "#CCCCCC",
+                          border: "3px solid #CCCCCC",
+                          borderRadius: "10px",
+                          padding: "0.4rem",
+                          width: "3rem",
+                          height: "0.5rem",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          padding: "0.7rem",
+                          marginBottom: "4px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        ${elem}
+                      </div>
+                      <img
+                        src={diamond}
+                        className="diamond-image"
+                        style={{ color: "CCCCCC", padding: "0.4rem" }}
+                        onClick={() => {
+                          if (isLoggedIn) {
+                            sendDeso(index);
+                          } else {
+                            desoLogin();
+                            console.log("index", index);
+                          }
+                        }}
+                      />
+                    </div>
                   </div>
-                  <img
-                    src={diamond}
-                    className="diamond-image"
-                    style={{ color: "CCCCCC", padding: "0.4rem" }}
-                    onClick={() => {
-                      if (isLoggedIn) {
-                        sendDeso(index);
-                      } else {
-                        desoLogin();
-                        console.log("index", index);
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
 
-          <img src={unlem}></img>
-        </div>
+              <img src={unlem}></img>
+            </div>
+          </>
+        )}
       </div>
     </>
   );
