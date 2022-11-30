@@ -1,24 +1,37 @@
-body, html {
+body,
+html {
   margin: 0;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
-    Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-weight: 300;
+  /* font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+    Helvetica, Arial, "Lucida Grande", sans-serif; */
+    font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
   background: transparent;
 }
 
 .reward-button {
-  background-color: black;
-  color: #FFFF;
+  color: #ffff;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0.4rem;
-  border-radius: 2rem;
-  width: 150px;
-}
-
-.logout:hover {
-  background-color: black;
+  height: 50px !important;
+  width: 180px;
+  border: 3px solid;
+  border-image-source: linear-gradient(to right, #ed283e, #eb370c);
+  background: linear-gradient(#000000, #000000) padding-box,
+    linear-gradient(
+        160deg,
+        #ed283e,
+        #f802c9,
+        #8106fc,
+        #0d98fd,
+        #a6ba0d,
+        #fd9405,
+        #eb370c
+      )
+      border-box;
+  border-image-slice: 0.1;
 }
 
 .logout {
@@ -26,13 +39,25 @@ body, html {
   cursor: pointer;
 }
 
-
-.diamond-image {
-  transition: all .2s ease-in-out;
+.diamond-image:hover {
+  filter: invert(56%) sepia(84%) saturate(1923%) hue-rotate(189deg)
+    brightness(101%) contrast(104%);
 }
 
-.diamond-image:hover {
-  transform: scale(1.1);
-  background-color: rgb(69, 186, 108);
-  border-radius: 10px;
+.diamond-amount {
+  background: linear-gradient(#000000, #000000) padding-box,
+    linear-gradient(
+        135deg,
+        #ed283e,
+        #f802c9,
+        #8106fc,
+        #0d98fd,
+        #a6ba0d,
+        #fd9405,
+        #eb370c
+      )
+      border-box;
+  border: 3px solid;
+  border-radius: 40px;
+  color: white;
 }

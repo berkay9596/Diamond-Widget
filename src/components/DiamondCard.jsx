@@ -143,7 +143,14 @@ const DiamondCard = () => {
           setStyle({ display: "none" });
         }}
       >
-        <img src={diamond} />
+        <img
+          src={diamond}
+          style={{
+            filter:
+              "invert(56%) sepia(84%) saturate(1923%) hue-rotate(189deg) brightness(101%) contrast(104%)",
+             marginRight:"0.5rem"
+            }}
+        />
         Reward
       </button>
       <Confetti value={value} />
@@ -158,40 +165,55 @@ const DiamondCard = () => {
         style={{
           backgroundColor: "black",
           width: "450px",
-          // height: "175px",
-          height: `${isLoggedIn ? "175px" : "100px"}`,
-          borderRadius: "1.5rem",
+          height: `${isLoggedIn ? "225px" : "100px"}`,
           display: `${style.display}`,
         }}
       >
         {isLoggedIn && (
-          <div className="d-flex align-items-center mx-2 p-2">
-            <img src={loginthick} style={{ marginRight: "0.6rem" }}></img>
-            <p
+          <>
+            <div className="d-flex align-items-center mx-2 p-2">
+              <img
+                src={loginthick}
+                style={{ marginRight: "1rem", marginTop: "0.1rem" }}
+              ></img>
+              <p
+                style={{
+                  color: "#FFF",
+                  fontSize: "14px",
+                  margin: 0,
+                  marginTop: "1rem",
+                }}
+              >
+                Logged in as @{username} -
+                <a
+                  className="logout"
+                  style={{ color: "#F83E3E", textDecoration: "underline" }}
+                  onClick={desoLogout}
+                >
+                  {" "}
+                  Logout{" "}
+                </a>{" "}
+                <br />
+                <span style={{ fontSize: "11px" }}>
+                  {" "}
+                  Tipping widget by
+                  <span style={{ textDecoration: "underline" }}> Apolleo.</span>
+                </span>{" "}
+              </p>
+            </div>
+            <span
               style={{
-                color: "#FFF",
                 fontSize: "14px",
-                margin: 0,
-                marginTop: "1rem",
+                color: "white",
+                display: "flex",
+                justifyContent: "start",
+                marginLeft: "1rem",
               }}
             >
-              Logged in as {username} -
-              <a
-                className="logout"
-                style={{ color: "red" }}
-                onClick={desoLogout}
-              >
-                {" "}
-                Logout{" "}
-              </a>{" "}
-              <br />
-              <span style={{ fontSize: "11px" }}>
-                {" "}
-                Tipping designed by
-                <span style={{ textDecoration: "underline" }}> Apolleo.</span>
-              </span>
-            </p>
-          </div>
+              Send a Super Diamond. @Sandirose will receive the amount
+              <br /> shown as a tip from you.
+            </span>
+          </>
         )}
         {loading ? (
           <div
@@ -232,8 +254,9 @@ const DiamondCard = () => {
                         className="diamond-amount"
                         style={{
                           color: "#CCCCCC",
-                          border: "3px solid #CCCCCC",
-                          borderRadius: "10px",
+                          border: "3px solid",
+                          borderImageSource:
+                            " linear-gradient(to right,#ED283E, #F802C9) ",
                           padding: "0.4rem",
                           width: "3rem",
                           height: "0.5rem",
