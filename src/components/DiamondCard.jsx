@@ -148,8 +148,8 @@ const DiamondCard = () => {
           style={{
             filter:
               "invert(56%) sepia(84%) saturate(1923%) hue-rotate(189deg) brightness(101%) contrast(104%)",
-             marginRight:"0.5rem"
-            }}
+            marginRight: "0.5rem",
+          }}
         />
         Reward
       </button>
@@ -165,7 +165,7 @@ const DiamondCard = () => {
         style={{
           backgroundColor: "black",
           width: "450px",
-          height: `${isLoggedIn ? "225px" : "100px"}`,
+          height: `${isLoggedIn ? "175px" : "225px"}`,
           display: `${style.display}`,
         }}
       >
@@ -201,18 +201,6 @@ const DiamondCard = () => {
                 </span>{" "}
               </p>
             </div>
-            <span
-              style={{
-                fontSize: "14px",
-                color: "white",
-                display: "flex",
-                justifyContent: "start",
-                marginLeft: "1rem",
-              }}
-            >
-              Send a Super Diamond. @Sandirose will receive the amount
-              <br /> shown as a tip from you.
-            </span>
           </>
         )}
         {loading ? (
@@ -228,7 +216,37 @@ const DiamondCard = () => {
             <SpinnerCircular />{" "}
           </div>
         ) : (
-          <>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {isLoggedIn ? (
+              ""
+            ) : (
+              <>
+                <img
+                  src={loginthick}
+                  style={{
+                    width: "19.64px",
+                    margin: "1rem auto",
+                  }}
+                ></img>
+                <span
+                  style={{
+                    fontSize: "14px",
+                    color: "white",
+                    display: "flex",
+                    justifyContent: "start",
+                    marginLeft: "1rem",
+                  }}
+                >
+                  Send a Super Diamond. @Sandirose will receive the amount
+                  <br /> shown as a tip from you.
+                </span>
+              </>
+            )}
             <div
               style={{
                 display: "flex",
@@ -289,7 +307,7 @@ const DiamondCard = () => {
 
               <img src={unlem}></img>
             </div>
-          </>
+          </div>
         )}
       </div>
     </>
