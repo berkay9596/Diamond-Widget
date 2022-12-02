@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import loginthick from "../assets/loginthick.svg";
 import diamond from "../assets/diamond.svg";
 import Confetti from "./Confetti";
-import Deso from "deso-protocol";
 import DesoApi from "../libs/desoApi";
 import DesoIdentity from "../libs/desoIdentity";
 import { SpinnerCircular } from "spinners-react";
@@ -33,22 +32,21 @@ const DiamondCard = () => {
     setIsLoggedIn(true);
   };
   const desoLogout = () => {
-    const deso = new Deso();
-    const request = null;
-    const response = deso.identity.logout(request);
+    // const deso = new Deso();
+    // const request = null;
+    // const response = deso.identity.logout(request);
     setIsLoggedIn(false);
   };
-  const getUsername = async () => {
-    const deso = new Deso();
-    const request = {
-      PublicKeyBase58Check: publicKey,
-    };
-    const response = await deso.user.getSingleProfile(request);
-    setUsername(response?.Profile?.Username);
-  };
+  // const getUsername = async () => {
+  //   const deso = new Deso();
+  //   const request = {
+  //     PublicKeyBase58Check: publicKey,
+  //   };
+  //   const response = await deso.user.getSingleProfile(request);
+  //   setUsername(response?.Profile?.Username);
+  // };
 
   const sendDesoMiddleWare = async (index) => {
-    const deso = new Deso();
     const responseForExchange = await desoApi.getExchangeRate();
     let convertedUsd =
       (1 / responseForExchange.USDCentsPerBitCloutExchangeRate) * 100;
