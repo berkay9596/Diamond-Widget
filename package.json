@@ -8,15 +8,11 @@
     "@testing-library/user-event": "^13.5.0",
     "assert": "^2.0.0",
     "bootstrap": "^5.1.3",
-    "buffer": "^6.0.3",
-    "crypto": "npm:crypto-browserify",
-    "deso-protocol": "^0.6.0",
     "react": "^18.2.0",
     "react-canvas-confetti": "^1.3.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "spinners-react": "^1.0.7",
-    "stream": "npm:stream-browserify"
+    "spinners-react": "^1.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,7 +25,7 @@
       "react-app",
       "react-app/jest"
     ]
-  },
+  }, 
   "browserslist": {
     "production": [
       ">0.2%",
