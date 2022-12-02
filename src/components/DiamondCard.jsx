@@ -99,9 +99,9 @@ const DiamondCard = () => {
       .catch((err) => setLoading(false));
   };
 
-  useEffect(() => {
-    getUsername();
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   getUsername();
+  // }, [isLoggedIn]);
 
   const catchUrl = () => {
     var url_string = window.location.href;
