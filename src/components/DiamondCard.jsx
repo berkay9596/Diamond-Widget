@@ -32,19 +32,13 @@ const DiamondCard = () => {
     setIsLoggedIn(true);
   };
   const desoLogout = () => {
-    // const deso = new Deso();
-    // const request = null;
-    // const response = deso.identity.logout(request);
     setIsLoggedIn(false);
   };
-  // const getUsername = async () => {
-  //   const deso = new Deso();
-  //   const request = {
-  //     PublicKeyBase58Check: publicKey,
-  //   };
-  //   const response = await deso.user.getSingleProfile(request);
-  //   setUsername(response?.Profile?.Username);
-  // };
+  const getUsername = async () => {
+    const response = await desoApi.getSingleProfile(publicKey);
+    console.log("response", response);
+    setUsername(response?.Profile?.Username);
+  };
 
   const sendDesoMiddleWare = async (index) => {
     const responseForExchange = await desoApi.getExchangeRate();
@@ -99,9 +93,9 @@ const DiamondCard = () => {
       .catch((err) => setLoading(false));
   };
 
-  // useEffect(() => {
-  //   getUsername();
-  // }, [isLoggedIn]);
+  useEffect(() => {
+    getUsername();
+  }, [isLoggedIn]);
 
   const catchUrl = () => {
     var url_string = window.location.href;
@@ -156,50 +150,13 @@ const DiamondCard = () => {
             height: "200px",
           }}
         >
-          {isLoggedIn && (
-            <>
-              <div className="d-flex align-items-center mx-2 p-2">
-                <img
-                  src={loginthick}
-                  style={{ marginRight: "1rem", marginTop: "0.1rem" }}
-                ></img>
-                <p
-                  style={{
-                    color: "#FFF",
-                    fontSize: "14px",
-                    margin: 0,
-                    marginTop: "1rem",
-                  }}
-                >
-                  Logged in as @{username} -
-                  <a
-                    className="logout"
-                    style={{ color: "#F83E3E", textDecoration: "underline" }}
-                    onClick={desoLogout}
-                  >
-                    {" "}
-                    Logout{" "}
-                  </a>{" "}
-                  <br />
-                  <span style={{ fontSize: "11px" }}>
-                    {" "}
-                    Tipping widget by
-                    <span style={{ textDecoration: "underline" }}>
-                      {" "}
-                      Apolleo.
-                    </span>
-                  </span>{" "}
-                </p>
-              </div>
-            </>
-          )}
           {loading ? (
             <div
               style={{
-                dipslay: "flex",
+                display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                textAlign: "center",
+                height:"100%"
               }}
             >
               {" "}
@@ -212,39 +169,105 @@ const DiamondCard = () => {
                 flexDirection: "column",
               }}
             >
-              {isLoggedIn ? (
-                ""
-              ) : (
-                <>
-                  <img
-                    src={loginthick}
-                    style={{
-                      width: "19.64px",
-                      margin: "1rem auto",
-                    }}
-                  ></img>
-                  <span
-                    style={{
-                      fontSize: "13px",
-                      lineHeight: "17px",
-                      color: "white",
-                      display: "flex",
-                      justifyContent: "start",
-                      marginLeft: "3rem",
-                      fontWeight: "0 !important",
-                    }}
-                  >
-                    Send a Super Diamond. @Sandirose will receive the amount
-                    <br /> shown as a tip from you.
-                  </span>
-                </>
-              )}
+              <img
+                src={loginthick}
+                style={{
+                  width: "19.64px",
+                  margin: "1rem auto",
+                }}
+              ></img>
+              <div
+                style={{
+                  fontSize: "13px",
+                  lineHeight: "17px",
+                  color: "white",
+                  display: "flex",
+                  justifyContent: "start",
+                  marginLeft: "3rem",
+                  fontWeight: "0 !important",
+                  flexWrap: "wrap",
+                }}
+              >
+                {isLoggedIn && username !== undefined ? (
+                  <>
+                    <span
+                      style={{
+                        fontWeight: 0,
+                        lineHeight: "16.94px !important",
+                      }}
+                    >
+                      {" "}
+                      Logged in as @{username}
+                    </span>
+                    <span
+                      style={{
+                        borderTop: " 1px solid white",
+                        width: "12px",
+                        position: "relative",
+                        top: "0.5rem",
+                        left: "0.2rem",
+                      }}
+                    ></span>
+                    <a
+                      style={{
+                        color: "#fe3537",
+                        marginLeft: "0.4rem",
+                        cursor: "pointer",
+                      }}
+                      onClick={desoLogout}
+                    >
+                      Logout
+                    </a>
+                    <span
+                      style={{
+                        borderTop: " 0.8px solid #fe3537",
+                        width: "2.47rem",
+                        position: "relative",
+                        top: "1rem",
+                        right: "2.47rem",
+                      }}
+                    ></span>
+                    <span style={{ fontSize: "9.85px", fontWeight: 0 }}>
+                      {" "}
+                      $DESO Tipping widget by{" "}
+                      <span
+                        style={{
+                          color: "#4da3ff",
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          window.open("https://apolleo.com", "_blank")
+                        }
+                      >
+                        Apolleo.com
+                      </span>
+                      .
+                    </span>
+                    <span
+                      style={{
+                        borderTop: " 0.8px solid #4da3ff",
+                        width: "3.37rem",
+                        position: "relative",
+                        top: "0.9rem",
+                        right: "3.57rem",
+                      }}
+                    ></span>
+                  </>
+                ) : (
+                  <>
+                    Send a Super Diamond. @Sandirose will receive the amount{" "}
+                    <br />
+                    shown as a tip from you.
+                  </>
+                )}
+              </div>
+
               <div
                 style={{
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  padding: "1.6rem 2.7rem 0rem 2.7rem",
+                  padding: "1rem 2.7rem 0rem 2.7rem",
                 }}
               >
                 {amounts.map((elem, index) => {

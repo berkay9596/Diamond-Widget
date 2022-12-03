@@ -18,9 +18,9 @@ html {
   height: 50px !important;
   width: 200px;
   border: 2px solid;
-  border-image-source: linear-gradient(to right, #ed283e, #eb370c);
-  background: linear-gradient(#000000, #000000) padding-box,
-    linear-gradient(
+  border-image-source: repeating-linear-gradient(to right, #ed283e, #eb370c);
+  background: repeating-linear-gradient(#000000, #000000) padding-box,
+  repeating-linear-gradient(
         160deg,
         #ed283e,
         #f802c9,
@@ -45,7 +45,7 @@ html {
 }
 
 .diamond-amount {
-  background: linear-gradient(#000000, #000000) padding-box,
+  background: repeating-linear-gradient(#000000, #000000) padding-box,
     linear-gradient(
         135deg,
         #ed283e,
