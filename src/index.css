@@ -18,10 +18,8 @@ html {
   height: 50px !important;
   width: 200px;
   border: 2px solid;
-  border-image-source: repeating-linear-gradient(to right, #ed283e, #eb370c);
-  
   background: repeating-linear-gradient(#000000, #000000) padding-box,
-  repeating-linear-gradient(
+    repeating-linear-gradient(
         160deg,
         #ed283e,
         #f802c9,
@@ -33,13 +31,22 @@ html {
       )
       border-box;
 
+  border-style: solid;
+  -moz-border-image: -moz-linear-gradient(to right, #ed283e, #eb370c);
+  -webkit-border-image: -webkit-linear-gradient(to right, #ed283e, #eb370c);
+  /* border-image: linear-gradient(to right, #ed283e, #eb370c); */
 
-      border-style: solid;
-      -moz-border-image: -moz-linear-gradient(to right, #ed283e, #eb370c);
-      -webkit-border-image: -webkit-linear-gradient(to right, #ed283e, #eb370c);
-      border-image: linear-gradient(to right, #ed283e, #eb370c);
-
-  border-image-slice: 0.1;
+  border-image: repeating-linear-gradient(
+    160deg,
+    #ed283e,
+    #f802c9,
+    #8106fc,
+    #0d98fd,
+    #a6ba0d,
+    #fd9405,
+    #eb370c
+  );
+  border-image-slice: 1;
 }
 
 .logout {
