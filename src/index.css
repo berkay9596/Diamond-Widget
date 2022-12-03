@@ -19,6 +19,7 @@ html {
   width: 200px;
   border: 2px solid;
   border-image-source: repeating-linear-gradient(to right, #ed283e, #eb370c);
+  
   background: repeating-linear-gradient(#000000, #000000) padding-box,
   repeating-linear-gradient(
         160deg,
@@ -31,6 +32,13 @@ html {
         #eb370c
       )
       border-box;
+
+
+      border-style: solid;
+      -moz-border-image: -moz-linear-gradient(to right, #ed283e, #eb370c);
+      -webkit-border-image: -webkit-linear-gradient(to right, #ed283e, #eb370c);
+      border-image: linear-gradient(to right, #ed283e, #eb370c);
+
   border-image-slice: 0.1;
 }
 
