@@ -77,7 +77,7 @@ const DiamondCard = () => {
       SenderPublicKeyBase58Check: publicKey,
       // AmountNanos: Math.round(100 * (convertedUsd * 10000000)),
       AmountNanos: 1,
-      RecipientPublicKeyOrUsername: "Apolleo",
+      RecipientPublicKeyOrUsername: "ProdigeApp",
     };
 
     for (let i = 0; i < 2; i++) {
