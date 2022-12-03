@@ -95,3 +95,24 @@ html {
   margin-right: 2px;
   margin-bottom: 3px;
 }
+
+.rectangle {
+  box-sizing: border-box;
+  z-index: -99;
+  position: absolute;
+  width: 534px;
+  height: 231px;
+  left: -80px;
+  top: -27px;
+
+  background: linear-gradient(
+    135deg,
+    #ed283e 0%,
+    #f802c9 15.27%,
+    #8106fc 35.47%,
+    #0d98fd 56.16%,
+    #a6ba0d 73.89%,
+    #fd9405 88.18%,
+    #eb370c 100%
+  );
+}

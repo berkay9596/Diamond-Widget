@@ -40,10 +40,24 @@ class DesoApi {
     }
   }
 
-  async getSingleProfile(publicKey) {
+  async getSingleProfileFromPublicKey(publicKey) {
     const path = "/v0/get-single-profile";
     const data = {
       PublicKeyBase58Check: publicKey,
+    };
+
+    try {
+      const result = await this.getClient().post(path, data);
+      return result.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+  async getSingleProfileFromUserName(userName) {
+    const path = "/v0/get-single-profile";
+    const data = {
+      Username: userName,
     };
 
     try {
