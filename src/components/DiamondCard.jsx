@@ -26,7 +26,7 @@ const DiamondCard = () => {
   }, []);
 
   const desoLogin = async () => {
-    const response = await desoIdentity.loginAsync(3);
+    const response = await desoIdentity.loginAsync(4);
     console.log(response);
     setPublicKey(response.publicKey);
     setIsLoggedIn(true);
@@ -40,9 +40,7 @@ const DiamondCard = () => {
     setUsername(response?.Profile?.Username);
   };
   const getPublicKeyFromUserName = async (urlString) => {
-    console.log("calıstı");
     const response = await desoApi.getSingleProfileFromUserName(urlString);
-    console.log("response from username", response);
     if (response === null) {
       setIsCardVisible(false);
       alert("Profile name you entered is wrong");
@@ -88,7 +86,9 @@ const DiamondCard = () => {
           request.RecipientPublicKeyOrUsername
         );
         const transactionHex = await response.TransactionHex;
-        const signedTransactionHex = await desoIdentity.signTxAsync(transactionHex);
+        const signedTransactionHex = await desoIdentity.signTxAsync(
+          transactionHex
+        );
         const rtnSubmitTransaction = await desoApi.submitTransaction(
           signedTransactionHex
         );
@@ -99,7 +99,9 @@ const DiamondCard = () => {
           requestForProdigy.RecipientPublicKeyOrUsername
         );
         const transactionHex = await response.TransactionHex;
-        const signedTransactionHex = await desoIdentity.signTxAsync(transactionHex);
+        const signedTransactionHex = await desoIdentity.signTxAsync(
+          transactionHex
+        );
         const rtnSubmitTransaction = await desoApi.submitTransaction(
           signedTransactionHex
         );
@@ -110,8 +112,6 @@ const DiamondCard = () => {
         }
       }
     }
-
-
   };
 
   const sendDeso = async (index) => {
@@ -187,8 +187,8 @@ const DiamondCard = () => {
             className="card-main"
             style={{
               backgroundColor: "black",
-              width: "450px",
-              height: "200px",
+              width: "496px",
+              height: "196px",
             }}
           >
             {loading ? (
@@ -230,70 +230,75 @@ const DiamondCard = () => {
                   }}
                 >
                   {isLoggedIn && username !== undefined ? (
-                    <>
-                      <span
-                        style={{
-                          fontWeight: 0,
-                          lineHeight: "16.94px !important",
-                        }}
-                      >
-                        {" "}
-                        Logged in as @{username}
-                      </span>
-                      <span
-                        style={{
-                          borderTop: " 1px solid white",
-                          width: "12px",
-                          position: "relative",
-                          top: "0.5rem",
-                          left: "0.2rem",
-                        }}
-                      ></span>
-                      <a
-                        style={{
-                          color: "#fe3537",
-                          marginLeft: "0.4rem",
-                          cursor: "pointer",
-                        }}
-                        onClick={desoLogout}
-                      >
-                        Logout
-                      </a>
-                      <span
-                        style={{
-                          borderTop: " 0.8px solid #fe3537",
-                          width: "2.47rem",
-                          position: "relative",
-                          top: "1rem",
-                          right: "2.47rem",
-                        }}
-                      ></span>
-                      <span style={{ fontSize: "9.85px", fontWeight: 0 }}>
-                        {" "}
-                        $DESO Tipping widget by{" "}
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div style={{ display: "flex" }}>
                         <span
                           style={{
-                            color: "#4da3ff",
+                            fontWeight: 0,
+                            lineHeight: "16.94px !important",
+                          }}
+                        >
+                          {" "}
+                          Logged in as @{username}
+                        </span>
+                        <span
+                          style={{
+                            borderTop: " 1px solid white",
+                            width: "12px",
+                            top: "0.5rem",
+                            left: "0.2rem",
+                            position:"relative"
+                          }}
+                        ></span>
+                        <a
+                          style={{
+                            color: "#fe3537",
+                            marginLeft: "0.4rem",
                             cursor: "pointer",
                           }}
-                          onClick={() =>
-                            window.open("https://apolleo.com", "_blank")
-                          }
+                          onClick={desoLogout}
                         >
-                          Apolleo.com
+                          Logout
+                        </a>
+
+                        <span
+                          style={{
+                            borderTop: " 0.8px solid #fe3537",
+                            width: "2.47rem",
+                            position: "relative",
+                            top: "1rem",
+                            right: "2.47rem",
+                          }}
+                        ></span>
+                      </div>
+                      <div style={{display:"flex"}}>
+                        <span style={{ fontSize: "9.85px", fontWeight: 0 }}>
+                          {" "}
+                          $DESO Tipping widget by{" "}
+                          <span
+                            style={{
+                              color: "#4da3ff",
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              window.open("https://apolleo.com", "_blank")
+                            }
+                          >
+                            Apolleo.com
+                          </span>
+                          .
                         </span>
-                        .
-                      </span>
-                      <span
-                        style={{
-                          borderTop: " 0.8px solid #4da3ff",
-                          width: "3.37rem",
-                          position: "relative",
-                          top: "0.9rem",
-                          right: "3.57rem",
-                        }}
-                      ></span>
-                    </>
+                        <span
+                          style={{
+                            borderTop: " 0.8px solid #4da3ff",
+                            width: "3.37rem",
+                            position: "relative",
+                            top: "0.9rem",
+                            right: "3.57rem",
+                          }}
+                        ></span>
+                      </div>
+                    </div>
                   ) : (
                     <>
                       Send a Super Diamond. @{usernameReciever} will receive the
