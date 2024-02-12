@@ -26,8 +26,7 @@ const DiamondCard = () => {
   }, []);
 
   const desoLogin = async () => {
-    const response = await desoIdentity.loginAsync(3);
-    console.log(response);
+    const response = await desoIdentity.loginAsync(1);
     setPublicKey(response.publicKey);
     setIsLoggedIn(true);
   };
@@ -36,13 +35,10 @@ const DiamondCard = () => {
   };
   const getUsernameFromPublicKey = async () => {
     const response = await desoApi.getSingleProfileFromPublicKey(publicKey);
-    console.log("response", response);
     setUsername(response?.Profile?.Username);
   };
   const getPublicKeyFromUserName = async (urlString) => {
-    console.log("calıstı");
     const response = await desoApi.getSingleProfileFromUserName(urlString);
-    console.log("response from username", response);
     if (response === null) {
       setIsCardVisible(false);
       alert("Profile name you entered is wrong");
@@ -69,15 +65,9 @@ const DiamondCard = () => {
     }
     const request = {
       SenderPublicKeyBase58Check: publicKey,
-      // AmountNanos: Math.round(100 * (convertedUsd * 10000000)),
-      AmountNanos: 1,
+      AmountNanos: Math.round(100 * (convertedUsd * 10000000)),
+      // AmountNanos: 1,
       RecipientPublicKeyOrUsername: usernameReciever,
-    };
-    const requestForProdigy = {
-      SenderPublicKeyBase58Check: publicKey,
-      // AmountNanos: Math.round(100 * (convertedUsd * 10000000)),
-      AmountNanos: 1,
-      RecipientPublicKeyOrUsername: "ProdigeApp",
     };
 
     for (let i = 0; i < 2; i++) {
@@ -88,30 +78,14 @@ const DiamondCard = () => {
           request.RecipientPublicKeyOrUsername
         );
         const transactionHex = await response.TransactionHex;
-        const signedTransactionHex = await desoIdentity.signTxAsync(transactionHex);
+        const signedTransactionHex = await desoIdentity.signTxAsync(
+          transactionHex
+        );
         const rtnSubmitTransaction = await desoApi.submitTransaction(
           signedTransactionHex
         );
-      } else if (i === 1) {
-        const response = await desoApi.sendBitclout(
-          requestForProdigy.SenderPublicKeyBase58Check,
-          requestForProdigy.AmountNanos,
-          requestForProdigy.RecipientPublicKeyOrUsername
-        );
-        const transactionHex = await response.TransactionHex;
-        const signedTransactionHex = await desoIdentity.signTxAsync(transactionHex);
-        const rtnSubmitTransaction = await desoApi.submitTransaction(
-          signedTransactionHex
-        );
-        if (rtnSubmitTransaction) {
-          return true;
-        } else {
-          return null;
-        }
       }
     }
-
-
   };
 
   const sendDeso = async (index) => {
@@ -178,8 +152,8 @@ const DiamondCard = () => {
       ) : (
         <div
           style={{
-            marginLeft: "0.7rem",
-            marginTop: "0.3rem",
+            marginLeft: "0.1rem",
+            marginTop: "0.1rem",
           }}
         >
           <div className="rectangle"></div>
@@ -277,10 +251,13 @@ const DiamondCard = () => {
                             cursor: "pointer",
                           }}
                           onClick={() =>
-                            window.open("https://apolleo.com", "_blank")
+                            window.open(
+                              "https://diamondapp.com/u/berkayuksel",
+                              "_blank"
+                            )
                           }
                         >
-                          Apolleo.com
+                          Berkayuksel
                         </span>
                         .
                       </span>
