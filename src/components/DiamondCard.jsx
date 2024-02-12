@@ -152,8 +152,8 @@ const DiamondCard = () => {
       ) : (
         <div
           style={{
-            marginLeft: "0.1rem",
-            marginTop: "0.1rem",
+            marginLeft: "0.7rem",
+            marginTop: "0.3rem",
           }}
         >
           <div className="rectangle"></div>
@@ -161,8 +161,8 @@ const DiamondCard = () => {
             className="card-main"
             style={{
               backgroundColor: "black",
-              width: "450px",
-              height: "200px",
+              width: "496px",
+              height: "196px",
             }}
           >
             {loading ? (

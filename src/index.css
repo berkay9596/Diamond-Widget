@@ -1,6 +1,7 @@
 body,
 html {
-  margin: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   /* font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
     Helvetica, Arial, "Lucida Grande", sans-serif; */
   font-family: "Inter", sans-serif;
@@ -100,10 +101,10 @@ html {
   box-sizing: border-box;
   z-index: -99;
   position: absolute;
-  width: 534px;
-  height: 231px;
-  left: -80px;
-  top: -26.5px;
+  width: 500px;
+  height: 200px;
+  left: 9px;
+  top: 3px;
 
   background: linear-gradient(
     135deg,
